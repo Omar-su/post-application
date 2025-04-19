@@ -15,6 +15,11 @@ const NavLink = styled(Link)`
   font-weight: bold;
   margin-right: 1rem;
   color: ${({ theme }) => theme.text};
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Select = styled.select`
@@ -28,35 +33,46 @@ const Button = styled.button`
   border-radius: 4px;
   background-color: ${({ theme }) => theme.primary};
   color: white;
+  margin-left: 1rem;
 `;
 
 const Layout = ({ children }) => {
   const { theme, toggleTheme } = useTheme();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const location = useLocation();
 
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
   };
 
+  const nextTheme = theme === 'light' ? 'dark' : 'light';
+
   return (
-    <div style={{ background: theme === 'dark' ? '#111827' : '#ffffff', color: theme === 'dark' ? '#ffffff' : '#000000', minHeight: '100vh' }}>
+    <div
+      style={{
+        background: theme === 'dark' ? '#111827' : '#ffffff',
+        color: theme === 'dark' ? '#ffffff' : '#000000',
+        minHeight: '100vh',
+      }}
+    >
       <Navbar>
         <div>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/add">Add Post</NavLink>
+          <NavLink to="/">{t('nav.home')}</NavLink>
+          <NavLink to="/add">{t('nav.add_post')}</NavLink>
         </div>
         <div>
           <Select onChange={handleLanguageChange} defaultValue={i18n.language}>
             <option value="en">EN</option>
             <option value="sv">SV</option>
           </Select>
-          <Button onClick={toggleTheme} style={{ marginLeft: '1rem' }}>
-            {theme === 'light' ? 'Dark' : 'Light'} Mode
+          <Button onClick={toggleTheme}>
+            {t(`theme.${nextTheme}`)} {t('mode')}
           </Button>
         </div>
       </Navbar>
-      <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>{children}</main>
+      <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
+        {children}
+      </main>
     </div>
   );
 };

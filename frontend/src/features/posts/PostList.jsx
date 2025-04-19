@@ -67,19 +67,19 @@ const PostList = () => {
 
   return (
     <div>
-      <h1>{t('Posts')}</h1>
+      <h1>{t('posts')}</h1>
       <SearchInput
         type="text"
-        placeholder={t('Search posts...')}
+        placeholder={t('search_posts')}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
       <Table>
         <thead>
           <tr>
-            <Th>{t('Title')}</Th>
-            <Th>{t('Body')}</Th>
-            <Th>{t('Actions')}</Th>
+            <Th>{t('title')}</Th>
+            <Th>{t('body')}</Th>
+            <Th>{t('actions')}</Th>
           </tr>
         </thead>
         <tbody>
@@ -98,7 +98,7 @@ const PostList = () => {
                     setModalOpen(true);
                   }}
                 >
-                  {t('Delete')}
+                  {t('delete')}
                 </DeleteButton>
               </Td>
             </tr>

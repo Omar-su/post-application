@@ -1,5 +1,6 @@
 // src/components/DeleteModal.jsx
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const ModalOverlay = styled.div`
@@ -30,13 +31,14 @@ const Button = styled.button`
 `;
 
 const DeleteModal = ({ onDelete, onClose }) => {
+  const {t} = useTranslation();
   return (
-    <ModalOverlay>
-      <ModalBox>
-        <p>Are you sure you want to delete this post?</p>
+    <ModalOverlay onClick={onClose}>
+      <ModalBox onClick={(e) => e.stopPropagation()}>
+        <p>{t('delete_post_confirmation')}</p>
         <div style={{ marginTop: '1rem' }}>
-          <Button danger onClick={onDelete}>Delete</Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button danger onClick={onDelete}>{t('delete')}</Button>
+          <Button onClick={onClose}>{t('cancel')}</Button>
         </div>
       </ModalBox>
     </ModalOverlay>

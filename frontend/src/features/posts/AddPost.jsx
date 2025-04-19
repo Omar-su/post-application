@@ -57,6 +57,8 @@ const AddPost = () => {
             />
 
         </div>
+
+        
         
         <button
           type="submit"

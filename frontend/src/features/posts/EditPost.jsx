@@ -36,14 +36,14 @@ const EditPost = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="border p-2 rounded w-full"
-        placeholder={t('post_title')}
+        placeholder={t('title')}
       />
       <div></div>
       <textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
         className="border p-2 rounded w-full"
-        placeholder={t('post_body')}
+        placeholder={t('body')}
         rows="5"
       />
       <div></div>
