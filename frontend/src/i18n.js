@@ -22,13 +22,35 @@ i18n
           },
           nav: {
             home: "Home",
-            add_post: "Add Post"
+            add_post: "Add Post",
+            login: "Login",
+            logout: "Log out",
+            register: "Register"
           },
           delete_post_confirmation: 'Are you sure you want to delete this post?',
           delete: 'Delete',
           cancel: 'Cancel',
           edit_post: 'Edit Post',
           search_posts: 'Search Posts',
+          login: {
+            title: "Login",
+            username: "Username",
+            password: "Password",
+            button: "Login",
+            no_account: "Don't have an account?",
+            register_link: "Register",
+            failed: "Login failed"
+          },
+          register: {
+            title: "Register",
+            username: "Username",
+            password: "Password",
+            button: "Register",
+            have_account: "Already have an account?",
+            login_link: "Login",
+            success: "Registration successful. Please log in.",
+            failed: "Registration failed"
+          }
         },
       },
       sv: {
@@ -47,13 +69,35 @@ i18n
             },
             nav: {
                 home: "Hemma",
-                add_post: "Lägg till post"
+                add_post: "Lägg till post",
+                login: "Logga in",
+                logout: "Logga ut",
+                register: "Registera"
             },
           delete_post_confirmation: 'Är du säker du vill ta bort detta inlägg?',
           delete: 'Ta bort',
           cancel: 'Avbryt',
           edit_post: 'Redigera inlägg',
           search_posts: 'Sök inlägg',
+          login: {
+            title: "Logga in",
+            username: "Användarnamn",
+            password: "Lösenord",
+            button: "Logga in",
+            no_account: "Har du inget konto?",
+            register_link: "Registrera dig",
+            failed: "Inloggning misslyckades"
+          },
+          register: {
+            title: "Registrera",
+            username: "Användarnamn",
+            password: "Lösenord",
+            button: "Registrera",
+            have_account: "Har du redan ett konto?",
+            login_link: "Logga in",
+            success: "Registreringen lyckades. Logga in.",
+            failed: "Registreringen misslyckades"
+          }
         },
       },
     },

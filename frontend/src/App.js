@@ -8,6 +8,9 @@ import AddPost from './features/posts/AddPost';
 import NotFound from './features/errors/NotFound';
 import { ThemeProvider } from './theme/ThemeProvider';
 import Layout from './components/Layout';
+import Login from './features/auth/Login';
+import Register from './features/auth/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -16,9 +19,13 @@ function App() {
         <Router>
           <Layout>
             <Routes>
-              <Route path="/" element={<PostList />} />
-              <Route path="/edit/:id" element={<EditPost />} />
-              <Route path="/add" element={<AddPost />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              
+              <Route path="/" element={<ProtectedRoute><PostList /></ProtectedRoute>} />
+              <Route path="/edit/:id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
+              <Route path="/add" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
+              
               <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
