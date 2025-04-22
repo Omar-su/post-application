@@ -44,12 +44,13 @@ A modern **Blog Post Management System** with a React-based frontend and a Go-ba
 ### Frontend Setup
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/blog-post-management.git
-   cd blog-post-management
+   git clone https://github.com/Omar-su/post-application.git
+   cd post-application
    ```
 
 2. **Install Frontend Dependencies**:
    ```bash
+   cd frontend
    npm install
    ```
 
@@ -157,52 +158,15 @@ Note: JSONPlaceholder is a mock API, so changes to posts are not persisted.
 ## Testing
 To run frontend tests (if implemented):
 ```bash
+cd frontend
 npm test
 ```
 Ensure test files are in the `__tests__` directory.
 
 ## Troubleshooting
-- **Port Conflict**:
-  - **Frontend**: If `http://localhost:3000` is in use:
-    ```bash
-    PORT=3001 npm start
-    ```
-  - **Backend**: If `http://localhost:5000` is in use, update `main.go` to use a different port (e.g., `:5001`).
-- **Dependency Issues**:
-  - **Frontend**: If `npm install` fails:
-    ```bash
-    rm -rf node_modules package-lock.json
-    npm install
-    ```
-  - **Backend**: Ensure Go modules are enabled:
-    ```bash
-    go mod init blog-post-management
-    go mod tidy
-    ```
+
 - **CORS Errors**: The backend allows requests from `http://localhost:3000`. Ensure both frontend and backend are running.
 - **JSONPlaceholder Errors**: Verify internet connectivity for API requests.
-- **README Rendering as Plain Text**:
-  - Ensure the file is named exactly `README.md` (case-sensitive, no extra extensions).
-  - Verify the file is in the repository root.
-  - Commit a small change to force GitHub to reprocess:
-    ```bash
-    echo "# " >> README.md
-    git add README.md
-    git commit -m "Force Markdown rendering"
-    git push origin main
-    ```
-
-## Contributing
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/YourFeature`).
-3. Commit changes (`git commit -m 'Add YourFeature'`).
-4. Push to the branch (`git push origin feature/YourFeature`).
-5. Open a pull request with a clear description.
-
-Follow the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/).
-
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 - [React](https://reactjs.org/)
@@ -213,6 +177,4 @@ This project is licensed under the [MIT License](LICENSE).
 - [Go](https://go.dev/)
 - [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
 
----
 
-For issues or feature requests, open an issue on the [GitHub repository](https://github.com/your-username/blog-post-management/issues).
