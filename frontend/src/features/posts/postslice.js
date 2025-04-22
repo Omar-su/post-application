@@ -1,35 +1,29 @@
-import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Initial state for posts slice
 const initialState = {
-  posts: [],
-  loading: false,
-  error: null,
+  posts: [], 
+  loading: false, 
+  error: null, 
 };
 
+// Async thunk to fetch posts from an API
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
   return response.json();
 });
 
+// Slice definition for posts
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
     addPost: {
       reducer(state, action) {
-        console.log('Adding post:', action.payload);
         state.posts.push(action.payload);
       },
       prepare(post) {
-        const id = nanoid();
-        console.log('Generated ID for new post:', id);
-        return {
-          payload: {
-            id,
-            title: post.title,
-            body: post.body,
-          },
-        };
+        return { payload: { id: post.id, title: post.title, body: post.body } };
       },
     },
     updatePost(state, action) {
@@ -47,24 +41,17 @@ const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(fetchPosts.pending, (state) => { state.loading = true; })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.loading = false;
         const fetchedPosts = action.payload.map((post) => ({
-          ...post,
-          id: post.id.toString(),
+          ...post, id: post.id.toString(),
         }));
         const existingIds = new Set(state.posts.map((post) => post.id));
-        console.log('Existing posts:', state.posts);
-        console.log('Fetched posts:', fetchedPosts);
-        console.log('Existing IDs:', existingIds);
         state.posts = [
           ...state.posts,
           ...fetchedPosts.filter((post) => !existingIds.has(post.id)),
         ];
-        console.log('Merged posts:', state.posts);
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.loading = false;

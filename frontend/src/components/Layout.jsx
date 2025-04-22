@@ -1,55 +1,13 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../theme/ThemeProvider';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-
-const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  background-color: ${({ theme }) => theme.background};
-`;
-
-const NavGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const NavLink = styled(Link)`
-  font-weight: bold;
-  margin-right: 1rem;
-  color: ${({ theme, active }) => active ? theme.primary : theme.text};
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Select = styled.select`
-  padding: 0.25rem;
-  border: 1px solid ${({ theme }) => theme.border};
-  border-radius: 4px;
-  background: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.text};
-`;
-
-const Button = styled.button`
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  border: none;
-  background-color: ${({ theme }) => theme.primary};
-  color: white;
-  margin-left: 1rem;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
-`;
+import { NavGroup } from './NavGroup';
+import { NavLink } from './Navlink';
+import { Navbar } from './NavBar';
+import { LanguageSelector } from './LanguageSelector'; // Importing LanguageSelector
+import { ThemeToggleButton } from './ThemeToggleButton'; // Importing ThemeToggleButton
+import { AuthLinks } from './AuthLinks'; // Importing AuthLinks
 
 const Layout = ({ children }) => {
   const { theme, toggleTheme } = useTheme();
@@ -57,17 +15,19 @@ const Layout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Change language when a new option is selected
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
   };
 
+  // Clear user session and redirect to login
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/login');
   };
 
-  const isLoggedIn = !!localStorage.getItem('user');
-  const nextTheme = theme === 'light' ? 'dark' : 'light';
+  const isLoggedIn = !!localStorage.getItem('user');  // Check login status
+  const nextTheme = theme === 'light' ? 'dark' : 'light';  // Determine next theme option
 
   return (
     <div
@@ -81,6 +41,7 @@ const Layout = ({ children }) => {
         <NavGroup>
           {isLoggedIn ? (
             <>
+              {/* Show navigation links if user is logged in */}
               <NavLink to="/" active={location.pathname === "/"}>{t('nav.home')}</NavLink>
               <NavLink to="/add" active={location.pathname === "/add"}>{t('nav.add_post')}</NavLink>
             </>
@@ -88,28 +49,14 @@ const Layout = ({ children }) => {
         </NavGroup>
 
         <NavGroup>
-          <Select onChange={handleLanguageChange} defaultValue={i18n.language}>
-            <option value="en">EN</option>
-            <option value="sv">SV</option>
-          </Select>
-          <Button onClick={toggleTheme}>
-          {t(`theme.${nextTheme}`)} {t('mode')}
-          </Button>
-
-          <div style={{ width: '1rem' }} /> 
-
-          {isLoggedIn ? (
-            <Button onClick={handleLogout}>{t('nav.logout') || 'Logout'}</Button>
-          ) : (
-            <>
-              <NavLink to="/login" active={location.pathname === "/login"}>{t('nav.login') || 'Login'}</NavLink>
-              <NavLink to="/register" active={location.pathname === "/register"}>{t('nav.register') || 'Register'}</NavLink>
-            </>
-          )}
-
+          <LanguageSelector currentLanguage={i18n.language} onLanguageChange={handleLanguageChange} />
+          <ThemeToggleButton nextTheme={t(`theme.${nextTheme}`)} onToggleTheme={toggleTheme} />
+          <div style={{ width: '1rem' }} />
+          <AuthLinks isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         </NavGroup>
       </Navbar>
 
+      {/* Page content */}
       <main style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
         {children}
       </main>
@@ -118,3 +65,4 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+

@@ -3,30 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 function Login() {
-  const { t } = useTranslation();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const { t } = useTranslation(); // Initialize translation
+  const [username, setUsername] = useState(''); // Store username input
+  const [password, setPassword] = useState(''); // Store password input
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleLogin = async () => {
     try {
-      const res = await fetch('http://localhost:5000/login', {
+      const res = await fetch('http://localhost:5000/login', { // Send login request
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
 
-      if (res.ok) {
+      if (res.ok) { // If successful, store user data
         const data = await res.json();
         localStorage.setItem('user', data.user);
-        navigate('/');
+        navigate('/'); // Redirect to home
       } else {
-        const err = await res.text();
+        const err = await res.text(); // Show error message if login fails
         alert(err);
       }
     } catch (error) {
       console.error(error);
-      alert(t('login.failed'));
+      alert(t('login.failed')); // Display error message if request fails
     }
   };
 
@@ -36,19 +36,19 @@ function Login() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <input
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)} // Update username state
           placeholder={t('login.username')}
           style={{ padding: '0.5rem', fontSize: '1rem' }}
         />
         <input
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)} // Update password state
           placeholder={t('login.password')}
           type="password"
           style={{ padding: '0.5rem', fontSize: '1rem' }}
         />
         <button
-          onClick={handleLogin}
+          onClick={handleLogin} // Call login function on click
           style={{
             padding: '0.5rem',
             fontSize: '1rem',
@@ -65,7 +65,7 @@ function Login() {
       <p style={{ marginTop: '1rem' }}>
         {t('login.no_account')}{' '}
         <span
-          onClick={() => navigate('/register')}
+          onClick={() => navigate('/register')} // Navigate to register page
           style={{ color: 'blue', cursor: 'pointer' }}
         >
           {t('login.register_link')}

@@ -1,8 +1,11 @@
-// src/components/DeleteModal.jsx
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from './Button';
 import styled from 'styled-components';
 
+/**
+ * Fullscreen overlay that dims the background and centers the modal.
+ */
 const ModalOverlay = styled.div`
   position: fixed;
   inset: 0;
@@ -12,6 +15,9 @@ const ModalOverlay = styled.div`
   justify-content: center;
 `;
 
+/**
+ * Styled container for the modal content.
+ */
 const ModalBox = styled.div`
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
@@ -21,24 +27,22 @@ const ModalBox = styled.div`
   text-align: center;
 `;
 
-const Button = styled.button`
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  border: none;
-  color: white;
-  background-color: ${({ danger, theme }) => (danger ? theme.danger : theme.primary)};
-`;
-
+/**
+ * DeleteModal displays a confirmation dialog with Delete and Cancel buttons.
+ * 
+ * @param {function} onDelete - Function to call when delete is confirmed.
+ * @param {function} onClose - Function to close the modal.
+ */
 const DeleteModal = ({ onDelete, onClose }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+
   return (
-    <ModalOverlay onClick={onClose}>
+    <ModalOverlay data-testid="deletemodal" onClick={onClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
         <p>{t('delete_post_confirmation')}</p>
         <div style={{ marginTop: '1rem' }}>
-          <Button danger onClick={onDelete}>{t('delete')}</Button>
-          <Button onClick={onClose}>{t('cancel')}</Button>
+          <Button $danger onClick={onDelete}>{t('delete')}</Button>
+          <Button onClick={onClose}>{t('cancel')}</Button> 
         </div>
       </ModalBox>
     </ModalOverlay>

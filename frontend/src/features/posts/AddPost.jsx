@@ -41,6 +41,7 @@ const AddPost = () => {
 
       <div className="flex flex-col space-y-4">
         <input
+          data-testid="titleinput"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -49,6 +50,7 @@ const AddPost = () => {
         />
         <div>
             <textarea
+                data-testid="bodyinput"
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 className="border p-2 rounded w-full"
@@ -58,8 +60,6 @@ const AddPost = () => {
 
         </div>
 
-        
-        
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
