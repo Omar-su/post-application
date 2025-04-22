@@ -26,14 +26,28 @@ func enableCORS(w http.ResponseWriter) {
 }
 
 
-// Load users from the file
 func loadUsers() ([]User, error) {
 	data, err := ioutil.ReadFile(userDataFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return []User{}, nil // File doesn't exist yet
+			// File doesn't exist, create it with empty array
+			err = ioutil.WriteFile(userDataFile, []byte("[]"), 0644)
+			if err != nil {
+				return nil, err
+			}
+			return []User{}, nil
 		}
 		return nil, err
+	}
+
+	// Check if file is empty
+	if len(data) == 0 {
+		// Write empty array to file
+		err = ioutil.WriteFile(userDataFile, []byte("[]"), 0644)
+		if err != nil {
+			return nil, err
+		}
+		return []User{}, nil
 	}
 
 	var users []User
@@ -47,7 +61,7 @@ func saveUsers(users []User) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(userDataFile, data, 0644)
+	return os.WriteFile(userDataFile, data, 0644)
 }
 
 // Handler for registration
