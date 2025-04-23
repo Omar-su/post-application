@@ -26,6 +26,8 @@ A modern **Blog Post Management System** with a React-based frontend and a Go-ba
 ```
 /frontend
   /src
+    /app
+      store.js             # Redux store to save state
     /components
       AuthLinks.jsx        # Links for login/register/logout
       Button.jsx           # Reusable button component
@@ -44,6 +46,7 @@ A modern **Blog Post Management System** with a React-based frontend and a Go-ba
       ToggleButton.jsx     # Reusable toggle button
     /features
       /auth
+        AuthForm.jsx       # Form to be used by login and register
         authSlice.js       # Redux Toolkit slice for auth state
         Login.jsx          # Login form component
         Login.test.jsx     # Tests for Login component
@@ -64,15 +67,8 @@ A modern **Blog Post Management System** with a React-based frontend and a Go-ba
     /theme
       theme.js             # Light and dark theme definitions
       ThemeProvider.jsx    # Context for theme switching
-    App.css                # Main app styles
     App.js                 # Main app component
-    index.css              # Global styles
     index.js               # Entry point for the React app
-    logo.svg               # App logo
-    reportWebVitals.js     # Web vitals reporting
-    setupTests.js          # Jest setup for testing
-    jest.config.js         # Jest configuration
-  package.json             # Frontend dependencies
 ```
 
 ### Backend
