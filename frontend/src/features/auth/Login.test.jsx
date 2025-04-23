@@ -174,7 +174,7 @@ describe('Login Component', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: 'testuser', password: 'testpass' }),
       });
-      expect(alertSpy).toHaveBeenCalledWith('login.failed');
+      expect(alertSpy).toHaveBeenCalledWith('Invalid credentials');
       expect(localStorage.setItem).not.toHaveBeenCalled();
       expect(mockNavigate).not.toHaveBeenCalled();
     });
