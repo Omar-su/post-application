@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"sync"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -102,6 +104,13 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+	if err != nil {
+		http.Error(w, "Error hashing password", http.StatusInternalServerError)
+		return
+	}
+	newUser.Password = string(hashedPassword)
+
 	users = append(users, newUser)
 	if err := saveUsers(users); err != nil {
 		http.Error(w, "Error saving user", http.StatusInternalServerError)
@@ -143,13 +152,16 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, u := range users {
-		if u.Username == credentials.Username && u.Password == credentials.Password {
-			json.NewEncoder(w).Encode(map[string]string{
-				"message": "Login successful",
-				"user":    u.Username,
-			})
-			return
-		}
+		if u.Username == credentials.Username {
+			err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(credentials.Password))
+			if err == nil {
+				json.NewEncoder(w).Encode(map[string]string{
+					"message": "Login successful",
+					"user":    u.Username,
+				})
+				return
+			}
+		}		
 	}
 
 	http.Error(w, "Invalid username or password", http.StatusUnauthorized)
