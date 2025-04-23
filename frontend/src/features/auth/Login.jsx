@@ -1,77 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+// src/features/auth/Login.js
+import React from 'react';
+import AuthForm from './AuthForm';
 
 function Login() {
-  const { t } = useTranslation(); // Initialize translation
-  const [username, setUsername] = useState(''); // Store username input
-  const [password, setPassword] = useState(''); // Store password input
-  const navigate = useNavigate(); // Hook for navigation
-
-  const handleLogin = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/login', { // Send login request
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-
-      if (res.ok) { // If successful, store user data
-        const data = await res.json();
-        localStorage.setItem('user', data.user);
-        navigate('/'); // Redirect to home
-      } else {
-        const err = await res.text(); // Show error message if login fails
-        alert(err);
-      }
-    } catch (error) {
-      console.error(error);
-      alert(t('login.failed')); // Display error message if request fails
-    }
-  };
-
   return (
-    <div style={{ maxWidth: '300px', margin: 'auto', paddingTop: '2rem' }}>
-      <h2>{t('login.title')}</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)} // Update username state
-          placeholder={t('login.username')}
-          style={{ padding: '0.5rem', fontSize: '1rem' }}
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)} // Update password state
-          placeholder={t('login.password')}
-          type="password"
-          style={{ padding: '0.5rem', fontSize: '1rem' }}
-        />
-        <button
-          onClick={handleLogin} // Call login function on click
-          style={{
-            padding: '0.5rem',
-            fontSize: '1rem',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
-        >
-          {t('login.button')}
-        </button>
-      </div>
-      <p style={{ marginTop: '1rem' }}>
-        {t('login.no_account')}{' '}
-        <span
-          onClick={() => navigate('/register')} // Navigate to register page
-          style={{ color: 'blue', cursor: 'pointer' }}
-        >
-          {t('login.register_link')}
-        </span>
-      </p>
-    </div>
+    <AuthForm
+      titleKey="login.title"
+      usernamePlaceholderKey="login.username"
+      passwordPlaceholderKey="login.password"
+      buttonLabelKey="login.button"
+      submitUrl="http://localhost:5000/login"
+      onSuccessRedirect="/"
+      failureAlertKey="Invalid credentials"
+      alternateTextKey="login.no_account"
+      alternateLinkLabelKey="login.register_link"
+      alternateLinkPath="/register"
+      buttonColor="#3b82f6"
+    />
   );
 }
 
